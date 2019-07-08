@@ -137,12 +137,37 @@ export const cached = fn => {
 }
 
 /**
+ * 横线转驼峰命名
+ */
+let camelizeRE = /-(\w)/g;
+export const camelize = str => {
+    return str.replace(camelizeRE, function(_, c) {
+        return c ? c.toUpperCase() : '';
+    })
+}
+
+/**
+ * 驼峰命名转横线命名：拆分字符串，使用 - 相连，并且转换为小写
+ */
+let hyphenateRE = /\B([A-Z])/g;
+export const hyphenate = str => str.replace(hyphenateRE, '-$1').toLowerCase();
+
+
+/**
+ * 字符串首位大写
+ * @param {*} str 
+ */
+export const capitalize = str => str.charAt(0).toUpperCase() + str.slice(1);
+
+
+
+/**
  * 获取数据类型，返回结果为 Number、String、Object、Array等
  * @param {*} value 
  */
 export const getRawType = value => Object.prototype.toString.call(value).slice(8, -1)
 
-// ---> 15  https://juejin.im/post/5d1cb9e46fb9a07ef1619f09#heading-22
+// ---> 18  https://juejin.im/post/5d1cb9e46fb9a07ef1619f09#heading-22
 
 export default {
     isStatic,
@@ -160,6 +185,9 @@ export default {
     isEmpty,
 
     cached,
+    camelizeRE,
+    hyphenateRE,
+    capitalize,
 
     getRawType
 }
